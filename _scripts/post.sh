@@ -11,6 +11,8 @@ newfile() {
 ---
 title: Twitter2 - $(date "+%Y-%m-%d")
 author: cdddar
+excerpt: Tweets of the Day
+
 ---
 
 HEADER
