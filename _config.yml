@@ -1,7 +1,9 @@
 ---
-theme: jekyll-theme-modernist
+remote_theme: cympfh/modernist
 highlighter: rouge
 
 title: Twitter2
-title_separator: "-"
-description: "@cdddar 's Twitter2"
+description: "@cdddar 's Tweets"
+base_url: https://parametertuning.github.io/
+
+twitter: cdddar
