@@ -21,8 +21,9 @@ makepost() {
     cat <<SUBHEADER > $TMP
 ## $(date "+%H:%M:%S")
 
-Clear buffer to cancel.
+Clear buffer and exit to cancel.
 
+<!-- vim: set ft=markdown: -->
 SUBHEADER
     EDITOR=${EDITOR:-vim}
     $EDITOR $TMP
