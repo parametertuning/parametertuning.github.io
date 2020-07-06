@@ -9,7 +9,7 @@ newfile() {
 
     cat <<HEADER > $POSTFILE
 ---
-title: Twitter2 - $(date "+%Y-%m-%d")
+title: $(date "+%Y-%m-%d")
 author: cdddar
 excerpt: Tweets of the Day
 
