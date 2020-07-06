@@ -21,7 +21,7 @@ HEADER
 makepost() {
     TMP=$(mktemp)
     cat <<SUBHEADER > $TMP
-## $(date "+%H:%M:%S")
+### $(date "+%H:%M:%S")
 
 Clear buffer and exit to cancel.
 
@@ -30,7 +30,7 @@ SUBHEADER
     EDITOR=${EDITOR:-vim}
     $EDITOR $TMP
     if [ -s $TMP ]; then
-        cat $TMP >> $POSTFILE
+         sed 's/<!--[^>]*-->//g' $TMP >> $POSTFILE
         echo "Added to $POSTFILE"
     else
         echo "Canceled"
