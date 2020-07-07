@@ -23,7 +23,7 @@ makepost() {
     cat <<SUBHEADER > $TMP
 ### $(date "+%H:%M:%S")
 
-Clear buffer and exit to cancel.
+<!-- Clear buffer and exit to cancel. -->
 
 <!-- vim: set ft=markdown: -->
 SUBHEADER
