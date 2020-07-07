@@ -24,7 +24,6 @@ makepost() {
 ### $(date "+%H:%M:%S")
 
 <!-- Clear buffer and exit to cancel. -->
-
 <!-- vim: set ft=markdown: -->
 SUBHEADER
     EDITOR=${EDITOR:-vim}
