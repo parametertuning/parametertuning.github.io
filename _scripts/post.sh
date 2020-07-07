@@ -18,6 +18,12 @@ excerpt: Tweets of the Day
 HEADER
 }
 
+trim() {
+    TMP_POSTFILE=$(mktemp)
+    cat $POSTFILE | awk 'last!=""||$0!="";{last=$0}' > $TMP_POSTFILE
+    mv $TMP_POSTFILE $POSTFILE
+}
+
 makepost() {
     TMP=$(mktemp)
     cat <<SUBHEADER > $TMP
@@ -29,7 +35,8 @@ SUBHEADER
     EDITOR=${EDITOR:-vim}
     $EDITOR $TMP
     if [ -s $TMP ]; then
-         sed 's/<!--[^>]*-->//g' $TMP >> $POSTFILE
+        sed 's/<!--[^>]*-->//g' $TMP >> $POSTFILE
+        trim
         echo "Added to $POSTFILE"
     else
         echo "Canceled"
