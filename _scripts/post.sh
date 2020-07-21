@@ -18,9 +18,12 @@ excerpt: Tweets of the Day
 HEADER
 }
 
-trim() {
+postprocessing() {
     TMP_POSTFILE=$(mktemp)
-    cat $POSTFILE | awk 'last!=""||$0!="";{last=$0}' > $TMP_POSTFILE
+    cat $POSTFILE |
+        awk 'last!=""||$0!="";{last=$0}' | # empty lines trim
+        # sed 's|https\?://\([a-zA-Z0-9.,/?!@\+\&\=\-\_\%\~;#()]*\)|[\1](&)|g' | # url links
+        cat > $TMP_POSTFILE
     mv $TMP_POSTFILE $POSTFILE
 }
 
@@ -36,7 +39,7 @@ SUBHEADER
     $EDITOR $TMP
     if [ -s $TMP ]; then
         sed 's/<!--[^>]*-->//g' $TMP >> $POSTFILE
-        trim
+        postprocessing
         echo "Added to $POSTFILE"
     else
         echo "Canceled"
