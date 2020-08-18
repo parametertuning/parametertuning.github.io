@@ -53,9 +53,10 @@ def read_root():
 <body>
   <div class="paper sm-8 margin-large" id="app">
     <div class="form-group">
-      <textarea placeholder="Here" v-model="content"></textarea>
-      <button v-on:click="post">Post</button>
+      <textarea placeholder="Write Here!" v-model="content" :disabled="loading"></textarea>
+      <button v-on:click="post" :disabled="loading">Post</button>
     </div>
+    <div v-show="loading"><i class="fas fa-spinner fa-spin"></i> 少女投稿中</div>
     <div>{{stdout}}</div>
     <div>{{stderr}}</div>
   </div>
@@ -66,6 +67,7 @@ def read_root():
         content: "",
         stdout: "",
         stderr: "",
+        loading: false,
       },
       methods: {
         post() {
@@ -74,17 +76,18 @@ def read_root():
             this.stderr = "Empty Content";
             return;
           }
-          this.stdout = "";
-          this.stderr = "少女投稿中...";
+          this.loading = true;
           fetch(`http://${location.host}/post`, {
             method: "POST",
             body: JSON.stringify({"content": this.content}),
           }).then(response => response.json())
           .then(msg => {
+            this.loading = false;
             this.content = "";
             this.stdout = msg;
             this.stderr = "";
           }).catch(msg => {
+            this.loading = false;
             this.stderr = msg;
           });
         }
