@@ -1,3 +1,5 @@
+import hashlib
+import os
 import subprocess
 import tempfile
 
@@ -6,14 +8,19 @@ import fastapi.responses
 from pydantic import BaseModel
 
 app = fastapi.FastAPI()
+password = os.environ["PASSWORD"]
 
 
 class PostData(BaseModel):
     content: str
+    passphrase: str
+    salt: str
 
 
 @app.post("/post")
 def post(item: PostData):
+    if hashlib.md5(f"{password}{item.salt}".encode()).hexdigest() != item.passphrase:
+        return {"status": "Err", "err": "Auth Error"}
     try:
         with tempfile.NamedTemporaryFile('wt') as f:
             f.write(item.content)
@@ -58,7 +65,7 @@ def read_root():
     <div class="row">
       <div class="col col-10">
         <div class="form-group">
-          <input type="text" v-model="auth" placeholder="auth">
+          <input type="password" v-model="auth" placeholder="auth">
         </div>
       </div>
       <div class="col col-2">
@@ -91,13 +98,24 @@ def read_root():
           this.loading = true;
           this.stdout = "";
           this.stderr = "";
+
+          var now = new Date();
+          var salt = `${now.getMonth()}${Math.random()}${now.getDate()}`;
+          var passphrase = md5(`${this.auth}${salt}`);
+
           fetch(`http://${location.host}/post`, {
             method: "POST",
-            body: JSON.stringify({"content": this.content}),
+            body: JSON.stringify({
+                content: this.content,
+                passphrase: passphrase,
+                salt: salt,
+            }),
           }).then(response => response.json())
           .then(msg => {
+            if (msg.status == "OK") {
+              this.content = "";
+            }
             this.loading = false;
-            this.content = "";
             this.stdout = msg;
             this.stderr = "";
           }).catch(msg => {
