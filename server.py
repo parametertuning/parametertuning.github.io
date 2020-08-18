@@ -77,6 +77,8 @@ def read_root():
             return;
           }
           this.loading = true;
+          this.stdout = "";
+          this.stderr = "";
           fetch(`http://${location.host}/post`, {
             method: "POST",
             body: JSON.stringify({"content": this.content}),
