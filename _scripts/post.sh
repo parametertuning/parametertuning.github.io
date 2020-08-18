@@ -49,6 +49,7 @@ SUBHEADER
 
 post-from-file() {
     cat <<SUBHEADER >> $POSTFILE
+
 ### $(date "+%H:%M:%S")
 
 SUBHEADER
