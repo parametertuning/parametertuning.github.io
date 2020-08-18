@@ -38,6 +38,7 @@ def read_root():
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.7.0/dist/paper.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
   <title>Twitter2</title>
   <style>
   div#app {
@@ -47,17 +48,24 @@ def read_root():
     width: 100%;
     height: 30vh;
   }
-  button {
-    float: right;
-    margin: 0.1rem;
-  }
   </style>
 </head>
 <body>
   <div class="paper sm-8 margin-large" id="app">
     <div class="form-group">
       <textarea placeholder="Write Here!" v-model="content" :disabled="loading"></textarea>
-      <button v-on:click="post" :disabled="loading">Post</button>
+    </div>
+    <div class="row">
+      <div class="col col-10">
+        <div class="form-group">
+          <input type="text" v-model="auth" placeholder="auth">
+        </div>
+      </div>
+      <div class="col col-2">
+        <div class="form-group">
+          <button v-on:click="post" :disabled="loading">Post</button>
+        </div>
+      </div>
     </div>
     <div v-show="loading"><i class="fas fa-spinner fa-spin"></i> 少女投稿中</div>
     <div class="text-primary">{{stdout}}</div>
@@ -67,6 +75,7 @@ def read_root():
     var app = new Vue({
       el: "#app",
       data: {
+        auth: "",
         content: "",
         stdout: "",
         stderr: "",
