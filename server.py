@@ -79,6 +79,7 @@ def read_root():
             body: JSON.stringify({"content": this.content}),
           }).then(response => response.json())
           .then(msg => {
+            this.content = "";
             this.stdout = msg;
             this.stderr = "";
           }).catch(msg => {
