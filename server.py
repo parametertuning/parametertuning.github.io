@@ -74,6 +74,8 @@ def read_root():
             this.stderr = "Empty Content";
             return;
           }
+          this.stdout = "";
+          this.stderr = "少女投稿中...";
           fetch(`http://${location.host}/post`, {
             method: "POST",
             body: JSON.stringify({"content": this.content}),
