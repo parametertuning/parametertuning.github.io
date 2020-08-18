@@ -40,6 +40,9 @@ def read_root():
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <title>Twitter2</title>
   <style>
+  div#app {
+    padding: 3rem;
+  }
   textarea {
     width: 100%;
     height: 30vh;
@@ -57,8 +60,8 @@ def read_root():
       <button v-on:click="post" :disabled="loading">Post</button>
     </div>
     <div v-show="loading"><i class="fas fa-spinner fa-spin"></i> 少女投稿中</div>
-    <div>{{stdout}}</div>
-    <div>{{stderr}}</div>
+    <div class="text-primary">{{stdout}}</div>
+    <div class="text-danger">{{stderr}}</div>
   </div>
   <script>
     var app = new Vue({
