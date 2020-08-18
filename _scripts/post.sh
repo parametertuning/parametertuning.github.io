@@ -47,5 +47,22 @@ SUBHEADER
     rm $TMP
 }
 
+post-from-file() {
+    cat <<SUBHEADER >> $POSTFILE
+### $(date "+%H:%M:%S")
+
+SUBHEADER
+    cat "$1" >> $POSTFILE
+    echo >> $POSTFILE
+    postprocessing
+}
+
 newfile
-makepost
+
+if [ $# -eq 0 ]; then
+    makepost
+else
+    echo "$1" >&2
+    cat "$1" >&2
+    post-from-file "$1"
+fi
