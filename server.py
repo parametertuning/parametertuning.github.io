@@ -58,7 +58,7 @@ def read_root():
   </style>
 </head>
 <body>
-  <div class="paper sm-8 margin-large" id="app">
+  <div id="app">
     <div class="form-group">
       <textarea placeholder="Write Here!" v-model="content" :disabled="loading"></textarea>
     </div>
