@@ -22,7 +22,7 @@ postprocessing() {
     TMP_POSTFILE=$(mktemp)
     cat $POSTFILE |
         awk 'last!=""||$0!="";{last=$0}' | # empty lines trim
-        # sed 's|https\?://\([a-zA-Z0-9.,/?!@\+\&\=\-\_\%\~;#()]*\)|[\1](&)|g' | # url links
+        ruby _scripts/link.rb |
         cat > $TMP_POSTFILE
     mv $TMP_POSTFILE $POSTFILE
 }
@@ -38,6 +38,7 @@ SUBHEADER
     EDITOR=${EDITOR:-vim}
     $EDITOR $TMP
     if [ -s $TMP ]; then
+        echo >> $POSTFILE
         sed 's/<!--[^>]*-->//g' $TMP >> $POSTFILE
         postprocessing
         echo "Added to $POSTFILE"
