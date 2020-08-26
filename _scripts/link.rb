@@ -18,7 +18,7 @@ STDIN.each_line {|line|
   elsif /^(?<url>http.*)$/ =~ line
     puts "[#{url}](#{url})"
 
-  elsif /^!(?<url>http.*)$/ =~ line
+  elsif /^!\s*(?<url>http.*)$/ =~ line
     title = `html-title #{url} | tr '\n' ' ' | tr \\| - | sed 's/ *$//g; s/^ *//g'`
     puts "[#{title}](#{url})"
 
