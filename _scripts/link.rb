@@ -19,8 +19,12 @@ STDIN.each_line {|line|
     puts "[#{url}](#{url})"
 
   elsif /^!\s*(?<url>http.*)$/ =~ line
-    title = `html-title #{url} | tr '\n' ' ' | tr \\| - | sed 's/ *$//g; s/^ *//g'`
-    puts "[#{title}](#{url})"
+    title = `html-title #{url} | tr '\n' ' ' | tr \\| -`.chomp
+    if title != ""
+      puts "[#{title}](#{url})"
+    else
+      puts "[#{url}](#{url})"
+    end
 
   else
     puts line
