@@ -82,6 +82,7 @@ tw-text-image() {
         /tmp/tw.png
     tw-cd parametertuning
     tw -f /tmp/tw.png
+    rm /tmp/tw.png
 }
 
 newfile
