@@ -63,7 +63,7 @@ font() {
     cat <<EOM | shuf | head -1
 あくあフォント
 F66-Arahitu
-F66FudeRyuuhou
+F66筆りゅうほう
 F66Unsui
 F66HandicH
 いすい
