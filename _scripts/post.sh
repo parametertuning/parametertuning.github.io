@@ -66,13 +66,14 @@ F66-Arahitu
 F66FudeRyuuhou
 F66Unsui
 F66HandicH
-isui
+いすい
 YukarryAA
 EOM
 }
 
 tw-text-image() {
     FONT=$(font)
+    echo "FONT=$FONT"
     convert \
         -background white \
         -fill '#404040' \
