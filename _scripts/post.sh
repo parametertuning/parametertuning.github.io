@@ -93,5 +93,4 @@ else
     echo "$1" >&2
     cat "$1" >&2
     post-from-file "$1"
-    tw-text-image "$1"
 fi
