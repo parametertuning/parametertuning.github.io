@@ -59,6 +59,30 @@ SUBHEADER
     postprocessing
 }
 
+font() {
+    cat <<EOM | shuf | head -1
+あくあフォント
+F66-Arahitu
+F66FudeRyuuhou
+F66Unsui
+F66HandicH
+isui
+YukarryAA
+EOM
+}
+
+tw-text-image() {
+    FONT=$(font)
+    convert \
+        -background white \
+        -fill '#404040' \
+        -font "$FONT" \
+        -pointsize 72 label:"$(cat $1)" \
+        /tmp/tw.png
+    tw-cd parametertuning
+    tw -f /tmp/tw.png
+}
+
 newfile
 
 if [ $# -eq 0 ]; then
@@ -67,4 +91,5 @@ else
     echo "$1" >&2
     cat "$1" >&2
     post-from-file "$1"
+    tw-text-image "$1"
 fi
