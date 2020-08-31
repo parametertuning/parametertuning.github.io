@@ -17,9 +17,16 @@ class PostData(BaseModel):
     salt: str
 
 
+def md5(text: str, num: int) -> str:
+    if num <= 0:
+        return text
+    code = hashlib.md5(text.encode()).hexdigest()
+    return md5(code, num - 1)
+
+
 @app.post("/post")
 def post(item: PostData):
-    if hashlib.md5(f"{password}{item.salt}".encode()).hexdigest() != item.passphrase:
+    if md5(f"{password}{item.salt}", 127) != item.passphrase:
         return {"status": "Err", "err": "Auth Error"}
     try:
         with tempfile.NamedTemporaryFile('wt') as f:
@@ -79,6 +86,10 @@ def read_root():
     <div class="text-danger">{{stderr}}</div>
   </div>
   <script>
+    function md5stretch(text, num) {
+      if (num <= 0) return text;
+      return md5stretch(md5(text), num - 1);
+    }
     var app = new Vue({
       el: "#app",
       data: {
@@ -101,7 +112,7 @@ def read_root():
 
           var now = new Date();
           var salt = `${now.getMonth()}${Math.random()}${now.getDate()}`;
-          var passphrase = md5(`${this.auth}${salt}`);
+          var passphrase = md5stretch(`${this.auth}${salt}`, 127);
 
           fetch(`http://${location.host}/post`, {
             method: "POST",
